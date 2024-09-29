@@ -1,0 +1,33 @@
+version: '3.7'
+
+services:
+  mongodb:
+    image: mongo
+    environment:
+      MONGO_INITDB_DATABASE: library
+      MONGO_INITDB_ROOT_USERNAME: owner
+      MONGO_INITDB_ROOT_PASSWORD: 8aYQ9MdvCAX2FcTS
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  app:
+    build: ./
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb+srv://owner:8aYQ9MdvCAX2FcTS@cluster0.fclhicg.mongodb.net/?retryWrites=true&w=majority
+      SPRING_DATA_MONGODB_DATABASE: library
+      JWT_SECRET_KEY: 8adeb58a034b296f1984ce77d8339e249d0e1b055c5835e832c73c8ca6c874eb
+      SUPER_ADMIN_USERNAME: admin
+      SUPER_ADMIN_PASSWORD: admin
+      STRIPE_SECRET_KEY: sk_test_51Q3ctpAH0fwEnHmqsqN1r9ymwp5iQCkISAW6xCNkb3FTFn4WB6CU3DB6fhV39vixbNss356J5Z6fHwWIy1rxqAjR00ncTgCo1T
+      MONGO_USER: owner
+      MONGO_PASSWORD: 8aYQ9MdvCAX2FcTS
+      MONGO_CLUSTER: cluster0.fclhicg.mongodb.net
+    depends_on:
+      - mongodb
+
+volumes:
+  mongodb_data:
