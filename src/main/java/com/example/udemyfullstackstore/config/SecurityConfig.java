@@ -2,6 +2,7 @@ package com.example.udemyfullstackstore.config;
 
 import com.example.udemyfullstackstore.jwt.JWTFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -23,10 +24,13 @@ import java.util.List;
 public class SecurityConfig {
     private final JWTFilter jwtFilter;
 
+    @Value("${application.security.frontend.url}")
+    private String FRONT_END_URL;
+
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("https://localhost:5173"));
+        configuration.setAllowedOrigins(List.of(FRONT_END_URL));
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
         configuration.setAllowCredentials(true);
