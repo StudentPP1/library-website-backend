@@ -46,7 +46,7 @@ public class AdminService {
         bookRepository.save(book);
     }
 
-    public void changeBookQuantity(Long bookId, int quantity, boolean increase) throws Exception {
+    public void changeBookQuantity(String bookId, int quantity, boolean increase) throws Exception {
         Optional<Book> book = bookRepository.findById(bookId);
 
         if (book.isEmpty()) {
@@ -66,12 +66,12 @@ public class AdminService {
         bookRepository.save(book.get());
     }
 
-    public void deleteBook(Long bookId) throws Exception {
+    public void deleteBook(String bookId) throws Exception {
         Optional<Book> book = bookRepository.findById(bookId);
         if (book.isEmpty()) {
             throw new Exception("book does not exist");
         }
-        Long id = book.get().getId();
+        String id = book.get().getId();
         bookRepository.deleteById(id);
         checkoutRepository.deleteAllByBookId(id);
         reviewRepository.deleteAllByBookId(id);

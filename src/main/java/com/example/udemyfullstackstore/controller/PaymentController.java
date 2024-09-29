@@ -36,8 +36,8 @@ public class PaymentController {
     }
 
     @GetMapping("/search/price")
-    public Payment searchPrice(@RequestParam Long bookId,
-                          @RequestHeader(value = "Authorization") String token) throws Exception {
+    public Payment searchPrice(@RequestParam String bookId,
+                          @RequestHeader(value = "Authorization") String token) {
         String userEmail = jwtService.getEmail(token.substring(7));
         System.out.println("/search/price");
         System.out.println(paymentService.searchPrice(userEmail, bookId));

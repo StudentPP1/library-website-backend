@@ -43,7 +43,7 @@ public class AdminController {
 
     @PostMapping("/increase/book/quantity")
     public void increaseBookQuantity(
-            @RequestParam Long bookId,
+            @RequestParam String bookId,
             @RequestParam int quantity,
             @RequestHeader(value = "Authorization") String token) throws Exception {
         validateAdminUser(token.substring(7));
@@ -52,7 +52,7 @@ public class AdminController {
 
     @PostMapping("/decrease/book/quantity")
     public void decreaseBookQuantity(
-            @RequestParam Long bookId,
+            @RequestParam String bookId,
             @RequestParam int quantity,
             @RequestHeader(value = "Authorization") String token) throws Exception {
         validateAdminUser(token.substring(7));
@@ -61,7 +61,7 @@ public class AdminController {
 
     @DeleteMapping("/delete/book")
     public void deleteBook(
-            @RequestParam Long bookId,
+            @RequestParam String bookId,
             @RequestHeader(value = "Authorization") String token) throws Exception {
         validateAdminUser(token.substring(7));
         adminService.deleteBook(bookId);

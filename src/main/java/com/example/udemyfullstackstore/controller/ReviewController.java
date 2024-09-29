@@ -22,7 +22,7 @@ public class ReviewController {
 
     @GetMapping("/user/book")
     public Boolean reviewBookByUser(@RequestHeader(value = "Authorization") String token,
-                                    @RequestParam Long bookId) {
+                                    @RequestParam String bookId) {
         String userEmail = jwtService.getEmail(token.substring(7));
         return reviewService.userReviewListed(userEmail, bookId);
     }

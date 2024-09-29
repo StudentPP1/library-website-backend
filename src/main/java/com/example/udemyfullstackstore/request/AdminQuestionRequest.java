@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AdminQuestionRequest {
-    private Long id;
+    private String id;
     private String response;
 }

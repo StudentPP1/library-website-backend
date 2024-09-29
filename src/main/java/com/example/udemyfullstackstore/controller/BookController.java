@@ -17,26 +17,26 @@ public class BookController {
     private final JWTService jwtService;
 
     @PutMapping("/return")
-    public void returnBook(@RequestParam Long bookId, @RequestHeader(value = "Authorization") String token) throws Exception {
+    public void returnBook(@RequestParam String bookId, @RequestHeader(value = "Authorization") String token) throws Exception {
         String userEmail = jwtService.getEmail(token.substring(7));
         bookService.returnBook(userEmail, bookId);
     }
 
     @GetMapping("/cart")
-    public List<CartResponse> currentCart(@RequestHeader(value = "Authorization") String token) throws Exception {
+    public List<CartResponse> currentCart(@RequestHeader(value = "Authorization") String token) {
         System.out.println("/secure/cart");
         String userEmail = jwtService.getEmail(token.substring(7));
         return bookService.currentCart(userEmail);
     }
 
     @PutMapping("/checkout")
-    public Book checkoutBook(@RequestParam Long bookId, @RequestHeader(value = "Authorization") String token) throws Exception {
+    public Book checkoutBook(@RequestParam String bookId, @RequestHeader(value = "Authorization") String token) throws Exception {
         String userEmail = jwtService.getEmail(token.substring(7));
         return bookService.checkoutBook(userEmail, bookId);
     }
 
     @GetMapping("/book/checked")
-    public Boolean checkoutBookByUser(@RequestParam Long bookId, @RequestHeader(value = "Authorization") String token) {
+    public Boolean checkoutBookByUser(@RequestParam String bookId, @RequestHeader(value = "Authorization") String token) {
         String userEmail = jwtService.getEmail(token.substring(7));
         return bookService.checkoutBookByUser(userEmail, bookId);
     }
@@ -48,7 +48,7 @@ public class BookController {
     }
 
     @PutMapping("/buy/book")
-    public void buyBook(@RequestParam Long bookId, @RequestHeader(value = "Authorization") String token) throws Exception {
+    public void buyBook(@RequestParam String bookId, @RequestHeader(value = "Authorization") String token) throws Exception {
         String userEmail = jwtService.getEmail(token.substring(7));
         System.out.println("buy book");
         bookService.buyBook(userEmail, bookId);

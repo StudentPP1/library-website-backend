@@ -21,7 +21,7 @@ public class BookService {
     private final CheckoutRepository checkoutRepository;
     private final PaymentRepository paymentRepository;
 
-    public Book checkoutBook(String userEmail, Long bookId) throws Exception {
+    public Book checkoutBook(String userEmail, String bookId) throws Exception {
         Optional<Book> book = bookRepository.findById(bookId);
 
         Checkout validateCheckout = checkoutRepository.findByUserEmailAndBookId(userEmail, bookId);
@@ -51,7 +51,7 @@ public class BookService {
         return book.get();
     }
 
-    public boolean checkoutBookByUser(String userEmail, Long bookId) {
+    public boolean checkoutBookByUser(String userEmail, String bookId) {
         Checkout validateCheckout = checkoutRepository.findByUserEmailAndBookId(userEmail, bookId);
         return validateCheckout != null;
     }
@@ -64,12 +64,16 @@ public class BookService {
         List<CartResponse> responses = new ArrayList<>();
         // all book user checked out
         List<Checkout> checkoutList = checkoutRepository.findBooksByUserEmail(userEmail);
-        List<Long> bookIdList = new ArrayList<>();
+        List<String> bookIdList = new ArrayList<>();
 
         for (Checkout checkout: checkoutList) {
             bookIdList.add(checkout.getBookId());
         }
-        List<Book> books = bookRepository.findBooksByBookIds(bookIdList);
+        List<Book> books = new ArrayList<>();
+        for (String bookId: bookIdList) {
+            Optional<Book> findBook = bookRepository.findById(bookId);
+            findBook.ifPresent(books::add);
+        }
 
         for (Book book : books) {
             // check book in checkout list
@@ -84,7 +88,7 @@ public class BookService {
         return responses;
     }
 
-    public void returnBook(String userEmail, Long bookId) throws Exception {
+    public void returnBook(String userEmail, String bookId) throws Exception {
         Optional<Book> book = bookRepository.findById(bookId);
         Checkout validateCheckout = checkoutRepository.findByUserEmailAndBookId(userEmail, bookId);
 
@@ -97,7 +101,7 @@ public class BookService {
         checkoutRepository.deleteById(validateCheckout.getId());
     }
 
-    public void buyBook(String userEmail, Long bookId) throws Exception {
+    public void buyBook(String userEmail, String bookId) throws Exception {
         Optional<Book> book = bookRepository.findById(bookId);
         Checkout validateCheckout = checkoutRepository.findByUserEmailAndBookId(userEmail, bookId);
 

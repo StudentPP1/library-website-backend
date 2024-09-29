@@ -48,7 +48,7 @@ public class PaymentService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    public Payment searchPrice(String userEmail, Long bookId) {
+    public Payment searchPrice(String userEmail, String bookId) {
         Payment payment = paymentRepository.findByUserEmail(userEmail);
         // 10 is book's price (just for example)
         if (payment.getAmount() == 0) {

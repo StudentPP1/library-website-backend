@@ -1,16 +1,17 @@
 package com.example.udemyfullstackstore.entity;
 
-import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name="messages")
+import javax.persistence.Column;
+import javax.persistence.Id;
+
 @Data
+@Document(collection = "message")
 public class Message {
     @Id
     @Column(name="id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @Column(name="user_email")
     private String userEmail;

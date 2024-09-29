@@ -11,6 +11,6 @@ import java.util.Optional;
 @NoArgsConstructor
 public class ReviewRequest {
     private double rating;
-    private Long bookId;
+    private String bookId;
     private Optional<String> reviewDescription;
 }

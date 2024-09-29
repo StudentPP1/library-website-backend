@@ -36,7 +36,7 @@ public class ReviewService {
     }
 
     // already send review or not
-    public Boolean userReviewListed(String userEmail, Long bookId) {
+    public Boolean userReviewListed(String userEmail, String bookId) {
         Review validateReview = reviewRepository.findByUserEmailAndBookId(userEmail, bookId);
         return validateReview != null;
     }

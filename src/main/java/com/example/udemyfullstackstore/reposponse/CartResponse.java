@@ -6,7 +6,6 @@ import lombok.Data;
 @Data
 public class CartResponse {
     private Book book;
-
     public CartResponse(Book book) {
         this.book = book;
     }

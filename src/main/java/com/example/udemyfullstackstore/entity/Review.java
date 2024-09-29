@@ -1,33 +1,32 @@
 package com.example.udemyfullstackstore.entity;
 
-import jakarta.persistence.*;
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
 import java.util.Date;
 
-@Entity
-@Table(name="review")
 @Data
+@Document(collection = "review")
 public class Review {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+    private String id;
 
     @Column(name = "user_email")
     private String userEmail;
 
     @Column(name = "date")
-    @CreationTimestamp
+    @CreatedDate
     private Date date;
 
     @Column(name = "rating")
     private double rating;
 
     @Column(name = "book_id")
-    private Long bookId;
+    private String bookId;
 
     @Column(name = "review_description")
     private String reviewDescription;
