@@ -5,6 +5,7 @@ import com.example.udemyfullstackstore.jwt.JWTService;
 import com.example.udemyfullstackstore.request.LoginRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,13 +24,18 @@ public class LoginController {
     @Value("${application.security.superAdmin.password}")
     private String superAdminPassword;
 
+    private final PasswordEncoder passwordEncoder;
+
     @PostMapping("/api/login")
     public HashMap<String, String> login(@RequestBody LoginRequest user) {
         System.out.println("ok");
         HashMap<String, String> map = new HashMap<>();
         UserRole role;
 
-        if (Objects.equals(user.getPassword(), superAdminPassword) && Objects.equals(user.getUsername(), superAdminUsername)) {
+        String userPassword = passwordEncoder.encode(user.getPassword());
+        String adminPassword = passwordEncoder.encode(superAdminPassword);
+
+        if (Objects.equals(userPassword, adminPassword) && Objects.equals(user.getUsername(), superAdminUsername)) {
             role = UserRole.ADMIN;
         }
         else {
